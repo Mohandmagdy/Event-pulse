@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 //connect to mongo db
 const mongo_host = 'mongo';
@@ -22,11 +23,15 @@ const mongo_connect = async () => {
 }
 mongo_connect();
 
+//middlewares
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('<h1>Welcome to Event Pulse</h1>');
-});
 
+//routes
+app.use('/auth', authRoutes);
+
+
+//start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
