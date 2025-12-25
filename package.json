@@ -1,0 +1,31 @@
+{
+  "name": "event_pulse",
+  "version": "1.0.0",
+  "description": "a real-time event management platform where organizers track live attendance and crowd activity",
+  "homepage": "https://github.com/Mohandmagdy/Event-pulse#readme",
+  "bugs": {
+    "url": "https://github.com/Mohandmagdy/Event-pulse/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mohandmagdy/Event-pulse.git"
+  },
+  "license": "ISC",
+  "author": "Mohand_Magdy",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "start-dev": "nodemon src/index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "mongoose": "^9.0.2",
+    "redis": "^5.10.0"
+  }
+}
