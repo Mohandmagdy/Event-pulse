@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
+const { authorizer } = require('./middlewares/authVaildation');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
 
 const app = express();
@@ -26,8 +28,9 @@ mongo_connect();
 //middlewares
 app.use(express.json());
 
-
 //routes
+app.use(cookieParser());
+app.use(authorizer);
 app.use('/auth', authRoutes);
 
 

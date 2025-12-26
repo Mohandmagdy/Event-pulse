@@ -5,8 +5,9 @@ const { signupValidation } = require('../validators/authValidation');
 const { authValidation } = require('../middlewares/authVaildation');
 
 
-router.post('/signup', signupValidation, authValidation, authController.handleSignup);
-router.get('/verify-email')
+router.post('/signup', signupValidation, authValidation, authController.signup);
+router.post('/login', authController.login);
+//router.get('/verify-email')
 
 
 module.exports = router;
