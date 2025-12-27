@@ -25,8 +25,48 @@ const login = async (req, res) => {
     }
 }
 
+const verifyEmail = (req, res) => {
+    authService.send_otp(req.user_id);
+    res.status(200).json({message: 'OTP sent to email'});
+}
+
+const verify_otp = async (req, res) => {
+    const { otp } = req.body;
+    try {
+        await authService.verify_otp(req.user_id, otp);
+        res.status(200).json({message: 'Email verified successfully'});
+    } catch(error) {
+        res.status(400).json({error: error.message});
+    }
+}
+
+const forgot_password = (req, res) => {
+    try{
+        const { email } = req.body;
+        authService.forgot_password(email);
+        res.status(200).json({message: 'OTP sent to email'});
+    } catch(error) {
+        res.status(500).json({error: error.message});
+    }
+    
+}
+
+const confirm_password_reset = async (req, res) => {
+    const { email, otp, new_password } = req.body;
+    try {
+        await authService.verify_forgot_password_otp(email, otp, new_password);
+        res.status(200).json({message: 'Password reset successful'});
+    } catch(error) {
+        res.status(400).json({error: error.message});
+    }
+}
 
 module.exports = { 
     signup,
-    login
+    login,
+    verifyEmail,
+    verify_otp,
+    forgot_password,
+    confirm_password_reset,
+
 };

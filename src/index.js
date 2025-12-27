@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { createClient } = require('redis');
+const redisClient = require('./config/redis_config');
 const authRoutes = require('./routes/authRoutes');
 const { authorizer } = require('./middlewares/authVaildation');
 const cookieParser = require('cookie-parser');
@@ -27,21 +27,17 @@ const mongo_connect = async () => {
 mongo_connect();
 
 //connect to redis
-const redis_host = 'redis';
-const redis_port = 6379;
-const redis_URI = `redis://${redis_host}:${redis_port}`;
-const redisClient = createClient({ url: redis_URI });
-redisClient.on('error', (err) => console.log('Redis Client Error', err));
-redisClient.connect().then(() => console.log('Redis client connected'));
-console.log('Connected to Redis');
+redisClient.connect()
+    .then(() => console.log('Redis client connected'))
+    .catch((err) => console.error('Error connecting to Redis:', err));
 
 //middlewares
 app.use(express.json());
 
 //routes
 app.use(cookieParser());
-app.use(authorizer);
 app.use('/auth', authRoutes);
+app.use(authorizer);
 
 
 //start server

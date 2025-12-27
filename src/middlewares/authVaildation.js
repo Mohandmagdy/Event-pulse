@@ -23,15 +23,16 @@ const authorizer = async (req, res, next) => {
         if(!token) 
             throw new Error('No token found');
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.id = decoded.id;
+        req.user_id = decoded.id;
         await existing_user(decoded.id);
         next();
     } catch(error) {
-        return res.status(401).json({error: 'Unauthorized'});
+        return res.status(401).json({error: error.message});
     }
 }
 
 module.exports = {
     authValidation,
-    authorizer
+    authorizer,
+
 };
