@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
+require('./config/google_config');
 const redisClient = require('./config/redis_config');
 const authRoutes = require('./routes/authRoutes');
 const { authorizer } = require('./middlewares/authVaildation');
@@ -33,6 +35,8 @@ redisClient.connect()
 
 //middlewares
 app.use(express.json());
+app.use(passport.initialize());
+
 
 //routes
 app.use(cookieParser());

@@ -1,6 +1,5 @@
 const { sign } = require('jsonwebtoken');
 const authService = require('../services/authService');
-const cookieParser = require('cookie-parser');
 
 const signup = async (req, res) => {
     const user = req.body;
@@ -48,7 +47,6 @@ const forgot_password = (req, res) => {
     } catch(error) {
         res.status(500).json({error: error.message});
     }
-    
 }
 
 const confirm_password_reset = async (req, res) => {
@@ -61,6 +59,15 @@ const confirm_password_reset = async (req, res) => {
     }
 }
 
+const passport_authenticate_google_callback = (req, res) => {
+    try {
+        authService.passport_authenticate_google_callback(req.user.id, res);
+        res.status(200).redirect('http://localhost:3000');
+    } catch (error) {
+        res.status(500).json({error: error.message});
+    }
+}
+
 module.exports = { 
     signup,
     login,
@@ -68,5 +75,6 @@ module.exports = {
     verify_otp,
     forgot_password,
     confirm_password_reset,
+    passport_authenticate_google_callback,
 
 };

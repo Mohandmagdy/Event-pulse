@@ -97,6 +97,20 @@ const verify_forgot_password_otp = async (email, otp, new_password) => {
     }
 }
 
+const passport_authenticate_google_callback = (id, res) => {
+    try {
+        const token = create_jwt_token(id);
+        res.cookie('jwt', token, { 
+            httpOnly: true,
+            secure: false,
+            maxAge: 24 * 60 * 60 * 1000 
+        });
+    } catch(error) {
+        throw new Error("Error during Google OAuth");
+    }
+    
+}
+
 module.exports = {
     handleSignup,
     handle_login,  
@@ -104,5 +118,7 @@ module.exports = {
     verify_otp,
     forgot_password,
     verify_forgot_password_otp,
-    
+    create_jwt_token,
+    passport_authenticate_google_callback,
+
 }
