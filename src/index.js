@@ -4,6 +4,7 @@ const passport = require('passport');
 require('./config/google_config');
 const redisClient = require('./config/redis_config');
 const authRoutes = require('./routes/authRoutes');
+const eventRoutes = require('./routes/eventRoutes');
 const { authorizer } = require('./middlewares/authVaildation');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
@@ -42,6 +43,7 @@ app.use(passport.initialize());
 app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use(authorizer);
+app.use('/event', eventRoutes);
 
 
 //start server

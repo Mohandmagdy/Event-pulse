@@ -13,7 +13,7 @@ const error_handler = (err) => {
 
 const sendMail = async (email, otp) => {
     await transporter.sendMail({
-        from: '"Loren Hagenes" <loren.hagenes96@ethereal.email>',
+        from: '"Liliana Schowalter" <liliana86@ethereal.email>',
         to: email,
         subject: "Email Verification",
         text: `Your otp code is ${otp}, the code will expire in 5 minutes.`,
