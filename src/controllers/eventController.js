@@ -1,9 +1,22 @@
 const eventService = require('../services/eventService');
 
 const getAllEvents = async (req, res) => {
+    const page = parseInt(req.query.page) || 1;
+    const userId = req.user_id;
     try {
-        const events = await eventService.getAllEvents();
-        res.status(200).json(events);
+        const [events, eventsCount] = await eventService.getAllEvents(page, userId);
+        res.status(200).json({
+            status: 'success',
+            events: events.length,
+            pagination: {
+                currentPage: page,
+                totalPages: Math.ceil(eventsCount / 10),
+                eventsCount: eventsCount,
+                hasNextPage: page * 10 < eventsCount,
+                hasPrevPage: page > 1
+            },
+            data: events
+        });
     } catch(error) {
         res.status(500).json({ message: error.message });
     }
@@ -50,11 +63,23 @@ const deleteEvent = async (req, res) => {
     }
 }
 
+const updateEvent = async(req, res) => {
+    const eventId = req.params.id;
+    const updateData = req.body;
+    try {
+        const updatedEvent = await eventService.updateEvent(eventId, updateData);
+        res.status(200).json(updatedEvent);
+    } catch(error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     getAllEvents,
     getMyEvents,
     createEvent,
     getEventDetails,
     deleteEvent,
+    updateEvent,
 
 }

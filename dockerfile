@@ -1,4 +1,4 @@
-FROM node AS base
+FROM node:25 AS base
 
 FROM base AS production
 WORKDIR /app

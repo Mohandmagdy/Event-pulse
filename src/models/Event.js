@@ -23,6 +23,10 @@ const eventSchema = mongoose.Schema({
         required: [true, 'Please enter an event location'], 
     },
     price: {Number},
+    attendees: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     createdBy: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

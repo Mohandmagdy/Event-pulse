@@ -5,6 +5,7 @@ require('./config/google_config');
 const redisClient = require('./config/redis_config');
 const authRoutes = require('./routes/authRoutes');
 const eventRoutes = require('./routes/eventRoutes');
+const bookingRoutes = require('./routes/bookingRoutes');
 const { authorizer } = require('./middlewares/authVaildation');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
@@ -44,6 +45,7 @@ app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use(authorizer);
 app.use('/event', eventRoutes);
+app.use('/booking', bookingRoutes);
 
 
 //start server
